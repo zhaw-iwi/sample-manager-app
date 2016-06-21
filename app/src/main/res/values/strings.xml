@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Svendroid - Mobile Experience Sampling</string>
+
+    <!-- Strings related to login -->
+    <!-- Trigger types -->
+    <string name="trigger_type_and">and</string>
+    <string name="trigger_type_or">or</string>
+    <string name="trigger_type_random">random</string>
+    <string name="trigger_type_social">social</string>
+    <string name="trigger_type_health">health</string>
+    <string name="trigger_type_place">place</string>
+    <string name="trigger_type_external">external</string>
+    <!-- Measure types -->
+    <string name="measure_type_select_one">select_one</string>
+    <string name="measure_type_select_many">select_many</string>
+    <string name="measure_type_yes_no">yes_no</string>
+    <string name="measure_type_rating">rating</string>
+    <string name="measure_type_frequency">frequency</string>
+    <string name="measure_type_option">option</string>
+    <string name="measure_type_free_text">open</string>
+    <string name="title_activity_measure">Svendroid</string>
+    <!-- Measure types -->
+    <string name="value_yes">Ja</string>
+    <string name="value_no">Nein</string>
+</resources>

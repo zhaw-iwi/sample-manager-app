@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "88322496625",
+    "firebase_url": "https://svendroid-777.firebaseio.com",
+    "project_id": "svendroid-777",
+    "storage_bucket": "svendroid-777.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88322496625:android:4483b6de02336873",
+        "android_client_info": {
+          "package_name": "com.svendroid.samplemanagerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88322496625-4p1k1q0n53uj3h4mvqfol9ts9k4csaf5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "88322496625-fgfd48j56lgktcdksk6fhq4vd03l4746.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSLe4ckaU1RZcQ7dDjvEJ4pDq3kTpdoVY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

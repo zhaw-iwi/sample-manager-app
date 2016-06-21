@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.svendroid.samplemanagerapp.MeasureActivity"
+    tools:showIn="@layout/activity_measure">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:id="@+id/questionLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Wie oft haben Sie heute schon geflucht?"
+            android:id="@+id/measureText"
+            android:layout_alignParentStart="true"
+            android:textColor="@color/abc_secondary_text_material_light"
+            android:textSize="28dp" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@mipmap/svendroid_medium" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="110dp"
+        android:id="@+id/answerPanel">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:visibility="gone"
+            android:id="@+id/option" >
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Option 1"
+                android:id="@+id/radioButton"
+                android:layout_weight="0.14"
+                android:layout_marginLeft="30dp"
+                android:textSize="20dp"
+                android:allowUndo="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Option 2"
+                android:id="@+id/radioButton2"
+                android:layout_weight="0.14"
+                android:layout_marginLeft="30dp"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/free_text"
+            android:visibility="gone">
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/freeText"
+                android:layout_weight="1"
+                android:layout_marginTop="50dp"
+                android:editable="true"
+                android:enabled="true"
+                android:focusable="true"
+                android:hint="Ihre Antwort" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/frequency"
+            android:gravity="center_horizontal"
+            android:weightSum="1"
+            android:visibility="gone">
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/numberPicker"
+                android:layout_marginTop="50dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rating"
+            android:visibility="gone">
+
+            <RatingBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:layout_marginTop="50dp"
+                android:numStars="5"
+                android:stepSize="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:visibility="gone"
+            android:id="@+id/yes_no">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.14"
+                android:orientation="horizontal"
+                android:id="@+id/radioGroupYesNo">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ja"
+                    android:id="@+id/radioButtonYes"
+                    android:layout_weight="0.14"
+                    android:layout_marginLeft="60dp"
+                    android:textSize="30dp"
+                    android:allowUndo="true" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nein"
+                    android:id="@+id/radioButtonNo"
+                    android:layout_weight="0.14"
+                    android:layout_marginLeft="40dp"
+                    android:textSize="30dp" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_weight="0"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignWithParentIfMissing="false"
+            android:paddingTop="50dip" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:visibility="gone"
+            android:id="@+id/select_one" >
+
+            <RadioGroup
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:id="@+id/radioGroupSelectOne" >
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:visibility="gone"
+            android:id="@+id/select_many" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/containerSelectMany"></LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        style="?android:textAppearanceSmall"
+        android:id="@+id/confirmButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Bestätigen"
+        android:textStyle="bold"
+        android:background="#e91e63"
+        android:textColor="#ffffff"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.00"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:clickable="true"
+        android:onClick="onConfirmed"
+        android:visibility="visible" />
+
+</RelativeLayout>
