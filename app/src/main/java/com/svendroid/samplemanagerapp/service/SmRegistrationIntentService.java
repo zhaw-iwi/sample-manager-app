@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.svendroid.samplemanagerapp.LoginActivity;
+import com.svendroid.samplemanagerapp.RegisterActivity;
 import com.svendroid.samplemanagerapp.data.UserDbHelper;
 import com.svendroid.samplemanagerapp.model.User;
 import com.svendroid.samplemanagerapp.util.Config;
@@ -37,34 +38,48 @@ public class SmRegistrationIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
 
-            String token = intent.getStringExtra("token");
+            if (Config.getUserId(getApplicationContext()) == null) {
+                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+                registerIntent.putExtra("token", intent.getStringExtra("token"));
+                registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                registerIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(registerIntent);
+            } else {
 
-            JsonObject json = new JsonObject();
-            json.addProperty("token", token);
-            Ion.with(getApplicationContext())
-                    .load("POST", Config.hostUrl + "api/users/token")
-                    .setJsonObjectBody(json)
-                    .asJsonObject()
-                    .setCallback(new FutureCallback<JsonObject>() {
-                        @Override
-                        public void onCompleted(Exception e, JsonObject result) {
+                String token = intent.getStringExtra("token");
+                String userId = Config.getUserId(getApplicationContext());
+                JsonObject json = new JsonObject();
+                json.addProperty("token", token);
+                json.addProperty("userId", userId);
+                Ion.with(getApplicationContext())
+                        .load("POST", Config.hostUrl + "api/users/token")
+                        .setJsonObjectBody(json)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
 
-                            if (result != null) {
-                                User user = new Gson().fromJson(result, User.class);
+                                if (result != null) {
+                                    User user = new Gson().fromJson(result, User.class);
 
-                                UserDbHelper userDbHelper = new UserDbHelper(getApplicationContext());
-                                userDbHelper.tabulaRasa();
-                                userDbHelper.insertUser(user.getEmail(), user.get_id(), user.getGcmToken());
-                                userDbHelper.close();
+                                    UserDbHelper userDbHelper = new UserDbHelper(getApplicationContext());
+                                    userDbHelper.tabulaRasa();
+                                    userDbHelper.insertUser(user.getEmail(), user.get_id(), user.getGcmToken());
+                                    userDbHelper.close();
 
+                                /*
                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                            }
+                                */
+                                }
 
-                            // do stuff with the result or error
-                        }
-                    });
+                                // do stuff with the result or error
+                            }
+                        });
+
+            }
         }
     }
 }

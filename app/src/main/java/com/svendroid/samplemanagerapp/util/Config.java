@@ -9,8 +9,8 @@ import com.svendroid.samplemanagerapp.model.User;
  * Created by svhe on 11.04.2016.
  */
 public class Config {
-    //public static final String hostUrl = "https://mighty-everglades-95815.herokuapp.com/";
-    public static final String hostUrl = "http://192.168.1.149:3001/";
+    public static final String hostUrl = "https://mighty-everglades-95815.herokuapp.com/";
+    //public static final String hostUrl = "http://192.168.1.149:3001/";
 
     public static String userId = null;
 

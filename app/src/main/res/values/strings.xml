@@ -5,6 +5,7 @@
     <!-- Trigger types -->
     <string name="trigger_type_and">and</string>
     <string name="trigger_type_or">or</string>
+    <string name="trigger_type_timer">timer</string>
     <string name="trigger_type_random">random</string>
     <string name="trigger_type_social">social</string>
     <string name="trigger_type_health">health</string>
@@ -22,4 +23,6 @@
     <!-- Measure types -->
     <string name="value_yes">Ja</string>
     <string name="value_no">Nein</string>
+    <string name="title_activity_register">Registrieren</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

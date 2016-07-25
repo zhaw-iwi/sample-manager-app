@@ -17,8 +17,9 @@
             android:layout_width="45dip"
             android:layout_height="45dip"
             android:id="@+id/projectImage"
-            android:foreground="@color/accent_material_dark"
-            android:background="@color/accent_material_light" />
+            android:foreground="@android:color/transparent"
+            android:background="@android:color/holo_red_light"
+            android:adjustViewBounds="false" />
 
         <ImageView
             android:layout_width="45dp"

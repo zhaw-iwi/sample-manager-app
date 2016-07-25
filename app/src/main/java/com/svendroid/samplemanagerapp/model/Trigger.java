@@ -8,6 +8,7 @@ public class Trigger {
     private String alias;
     private String type;
     private TimeSpan timeSpan;
+    private Timer[] timers;
     private String healthTrigger;
     private String socialTrigger;
     private String placeTrigger;
@@ -44,6 +45,14 @@ public class Trigger {
 
     public void setTimeSpan(TimeSpan timeSpan) {
         this.timeSpan = timeSpan;
+    }
+
+    public Timer[] getTimers() {
+        return timers;
+    }
+
+    public void setTimers(Timer[] timers) {
+        this.timers = timers;
     }
 
     public String getHealthTrigger() {

@@ -15,8 +15,6 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.svendroid.samplemanagerapp.R;
-import com.svendroid.samplemanagerapp.data.UserDbHelper;
-import com.svendroid.samplemanagerapp.model.Measure;
 import com.svendroid.samplemanagerapp.model.MeasureExtended;
 import com.svendroid.samplemanagerapp.model.TriggerInstance;
 import com.svendroid.samplemanagerapp.model.User;
@@ -122,17 +120,18 @@ public class SmMessageHandlerService extends IntentService {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, updateIntent, 0);
         alarmMgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
-        // Schedule an update request between 00:00-00:59 next day
+        // Schedule an update request between 01:00-01:59 next day
         Random r = new Random();
         int randomMinutes = r.nextInt(60);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
         calendar.set(Calendar.MINUTE, randomMinutes);
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DATE, 1);
+        Log.d("Svendroid", "Update scheduled on " + calendar.getTime().toString());
 
-        alarmMgr.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
         // Get actual data of project
         Ion.with(getApplicationContext())
@@ -153,6 +152,29 @@ public class SmMessageHandlerService extends IntentService {
                                     // And
                                 } else if (instance.getTrigger().getType().equals(getString(R.string.trigger_type_or))) {
                                     // Or
+                                } else if (instance.getTrigger().getType().equals(getString(R.string.trigger_type_timer))) {
+                                    // Timer
+                                    for (int i = 0; i < instance.getTrigger().getTimers().length; i++) {
+
+                                        PendingIntent alarmIntent = getIntentBroadcast(instance, i);
+
+                                        // Set the alarm to start
+                                        int hour = instance.getTrigger().getTimers()[i].getHour();
+                                        int minute = instance.getTrigger().getTimers()[i].getMinute();
+
+                                        Calendar calendar = Calendar.getInstance();
+                                        calendar.setTimeInMillis(System.currentTimeMillis());
+                                        calendar.set(Calendar.HOUR_OF_DAY, hour);
+                                        calendar.set(Calendar.MINUTE, minute);
+
+                                        if (calendar.getTimeInMillis() > Calendar.getInstance().getTimeInMillis()) {
+                                            Log.i("Svendroid", "Next trigger: " + calendar.getTime().toString());
+                                            alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+                                        } else {
+                                            Log.i("Svendroid", "Excluded trigger: " + calendar.getTime().toString());
+                                        }
+                                    }
+
                                 } else if (instance.getTrigger().getType().equals(getString(R.string.trigger_type_random))) {
                                     // Random
 
@@ -165,24 +187,7 @@ public class SmMessageHandlerService extends IntentService {
                                     Random r = new Random();
 
                                     for (int i = 0; i < repeats; i++) {
-                                        // Setup of alarm manager
-                                        Context context = getApplicationContext();
-                                        PendingIntent alarmIntent;
-
-                                        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                                        Intent intent = new Intent(context, SmTriggerReceiver.class);
-                                        // Set triggerInstanceId to identify pending intent
-                                        intent.setAction(instance.getMeasure().get_id() + "_" + i);
-                                        if (instance.getMeasure() != null) {
-                                            intent.putExtra("text", instance.getMeasure().getText());
-                                            intent.putExtra("alias", instance.getMeasure().getAlias());
-                                            intent.putExtra("type", instance.getMeasure().getType());
-                                            intent.putExtra("values", instance.getMeasure().getValues());
-                                            intent.putExtra("measureId", instance.getMeasure().get_id());
-                                            intent.putExtra("hasChildren", instance.getMeasure().getChildren() != null);
-                                        }
-
-                                        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+                                        PendingIntent alarmIntent = getIntentBroadcast(instance, i);
 
                                         // Set the alarm to start
                                         int minutes = timeSpan * 60;
@@ -218,5 +223,25 @@ public class SmMessageHandlerService extends IntentService {
                         }
                     }
                 });
+    }
+
+    private PendingIntent getIntentBroadcast(TriggerInstance instance, int index) {
+        // Setup of alarm manager
+        Context context = getApplicationContext();
+
+        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, SmTriggerReceiver.class);
+        // Set triggerInstanceId to identify pending intent
+        intent.setAction(instance.getMeasure().get_id() + "_" + index);
+        if (instance.getMeasure() != null) {
+            intent.putExtra("text", instance.getMeasure().getText());
+            intent.putExtra("alias", instance.getMeasure().getAlias());
+            intent.putExtra("type", instance.getMeasure().getType());
+            intent.putExtra("values", instance.getMeasure().getValues());
+            intent.putExtra("measureId", instance.getMeasure().get_id());
+            intent.putExtra("hasChildren", instance.getMeasure().getChildren() != null);
+        }
+
+        return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
 }

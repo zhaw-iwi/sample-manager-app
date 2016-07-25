@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
@@ -121,6 +122,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        refreshProjects();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int errorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -199,8 +207,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void refreshProjects() {
+        showProgress(true);
         if (Config.getUserId(this) != null) {
-            showProgress(true);
             Ion.with(this)
                     .load("GET" ,Config.hostUrl + "api/projects/mobile/" + Config.getUserId(getApplicationContext()))
                     .asJsonArray()
@@ -223,6 +231,13 @@ public class LoginActivity extends AppCompatActivity {
                     });
         }
 
+    }
+
+    public void onHelp(View view) {
+        UserDbHelper userDbHelper = new UserDbHelper(getApplicationContext());
+        User user = userDbHelper.getAll().get(0);
+        Snackbar.make(view, "User: " + user.getEmail(), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
     /**
      * Attempts to sign in or register the account specified by the login form.
