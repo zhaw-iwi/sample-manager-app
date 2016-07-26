@@ -38,10 +38,15 @@ public class ProjectAdapter extends ArrayAdapter<ProjectBasic> {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        UserDbHelper userDbHelper = new UserDbHelper(context);
-        User user = userDbHelper.getAll().get(0);
-        userDbHelper.close();
-        this.user = user;
+        try {
+            UserDbHelper userDbHelper = new UserDbHelper(context);
+            User user = userDbHelper.getAll().get(0);
+            userDbHelper.close();
+            this.user = user;
+        } catch (Exception e) {
+
+        }
+
     }
 
     public void setItems(ProjectBasic[] values) {

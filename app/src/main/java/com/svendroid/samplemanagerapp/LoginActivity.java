@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
         if (errorCode != ConnectionResult.SUCCESS) {
             GooglePlayServicesUtil.getErrorDialog(errorCode, this, 0);
         }
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main);
         //getSupportActionBar().setIcon(R.mipmap.svendroid_small);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
         // Set up the login form.
@@ -237,7 +237,21 @@ public class LoginActivity extends AppCompatActivity {
         UserDbHelper userDbHelper = new UserDbHelper(getApplicationContext());
         User user = userDbHelper.getAll().get(0);
         Snackbar.make(view, "User: " + user.getEmail(), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+                .setAction("LOGOUT", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        UserDbHelper userDbHelper1 = new UserDbHelper(getApplicationContext());
+                        String token = userDbHelper1.getAll().get(0).getGcmToken();
+                        userDbHelper1.tabulaRasa();
+                        userDbHelper1.close();
+
+                        Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+                        registerIntent.putExtra("token", token);
+                        registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        registerIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(registerIntent);
+                    }
+                }).show();
     }
     /**
      * Attempts to sign in or register the account specified by the login form.
